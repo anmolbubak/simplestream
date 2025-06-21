@@ -37,9 +37,15 @@
                     <a href="{{ route('videos.create') }}" class="btn btn-primary me-2">
                         <i class="fas fa-upload"></i> Upload Video
                     </a>
-                    <a href="{{ route('folders.create') }}" class="btn btn-secondary">
+                    <a href="{{ route('folders.create') }}" class="btn btn-secondary me-2">
                         <i class="fas fa-folder-plus"></i> New Folder
                     </a>
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
                 </div>
             </div>
         </header>

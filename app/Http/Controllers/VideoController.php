@@ -56,7 +56,23 @@ class VideoController extends Controller
             $video->folder_id = $request->folder_id;
             $video->save();
             
+            if ($request->ajax()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Video uploaded successfully',
+                    'video' => $video,
+                    'url' => route('videos.show', $video->id)
+                ]);
+            }
+            
             return redirect()->route('dashboard')->with('success', 'Video uploaded successfully');
+        }
+        
+        if ($request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to upload video'
+            ], 422);
         }
         
         return back()->with('error', 'Failed to upload video');

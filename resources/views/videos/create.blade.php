@@ -157,7 +157,19 @@
             
             xhr.addEventListener('load', function() {
                 if (xhr.status === 200) {
-                    window.location.href = xhr.responseURL;
+                    try {
+                        const response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            window.location.href = response.url;
+                        } else {
+                            uploadButton.disabled = false;
+                            uploadButton.textContent = 'Upload Video';
+                            alert(response.message || 'Upload failed. Please try again.');
+                        }
+                    } catch (e) {
+                        // If not JSON, it's a regular form submission response
+                        window.location.href = xhr.responseURL;
+                    }
                 } else {
                     uploadButton.disabled = false;
                     uploadButton.textContent = 'Upload Video';
